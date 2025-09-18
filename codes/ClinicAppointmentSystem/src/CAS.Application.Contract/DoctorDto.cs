@@ -8,7 +8,7 @@ namespace CAS.Application.Contract
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Speciality { get; set; }
-        public string CodeMeli { get; set; }
+        public string NationalCode { get; set; }
         public List<int> WorkingDays { get; set; }
     }
 }

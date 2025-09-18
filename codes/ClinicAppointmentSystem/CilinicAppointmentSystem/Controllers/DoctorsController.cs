@@ -27,7 +27,7 @@ namespace CilinicAppointmentSystem.Controllers
                 name = dto.Name,
                 lastName = dto.LastName,
                 speciality = dto.Speciality,
-                codeMeli = dto.CodeMeli
+                nationalCode = dto.NationalCode
             });        
 
         }   
