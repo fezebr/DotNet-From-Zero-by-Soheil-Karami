@@ -16,4 +16,10 @@ public class DoctorRepository : IDoctorRepository
     {
         return _doctors.ContainsKey(codeMeli);
     }
+
+    public Task<Doctor> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var doctor = _doctors.Values.FirstOrDefault(d => d.Id == id);
+        return Task.FromResult(doctor);
+    }
 }
