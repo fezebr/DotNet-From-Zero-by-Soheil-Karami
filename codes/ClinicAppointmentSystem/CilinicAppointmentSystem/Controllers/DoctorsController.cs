@@ -22,13 +22,33 @@ namespace CilinicAppointmentSystem.Controllers
             var dto = createDoctor.MapToDto();
             var id = await _doctorService.Create(dto,cancellationToken);
 
-            return CreatedAtAction(nameof(GetById), new { id = id }, dto);
-        }
+            return CreatedAtAction(nameof(GetById), new { id = id }, new { 
+                id = id, 
+                name = dto.Name,
+                lastName = dto.LastName,
+                speciality = dto.Speciality,
+                nationalCode = dto.NationalCode
+            });        
 
-        [HttpGet]
+        }   
+
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetById(string id, CancellationToken cancellationToken)
         {
-            return Ok();
+            if (!Guid.TryParse(id, out var guid))
+                return BadRequest("Invalid ID format");
+
+            try
+            {
+                var doctor = await _doctorService.GetById(guid, cancellationToken);
+                return Ok(doctor);
+            }
+            catch (ArgumentNullException)
+            {
+                return NotFound();
+            }
         }
+
+       
     }
 }

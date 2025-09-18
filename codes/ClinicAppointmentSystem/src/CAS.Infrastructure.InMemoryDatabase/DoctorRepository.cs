@@ -8,12 +8,18 @@ public class DoctorRepository : IDoctorRepository
     static Dictionary<string, Doctor> _doctors = new Dictionary<string, Doctor>();  
     public async Task<Guid> Create(Doctor doctor, CancellationToken cancellationToken)
     {
-        _doctors.Add(doctor.CodeMeli, doctor);
+        _doctors.Add(doctor.NationalCode, doctor);
         return doctor.Id;
     }
 
-    public async Task<bool> AlreadyExists(string codeMeli, CancellationToken cancellationToken)
+    public async Task<bool> AlreadyExists(string nationalCode, CancellationToken cancellationToken)
     {
-        return _doctors.ContainsKey(codeMeli);
+        return _doctors.ContainsKey(nationalCode);
+    }
+
+    public Task<Doctor> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var doctor = _doctors.Values.FirstOrDefault(d => d.Id == id);
+        return Task.FromResult(doctor);
     }
 }
